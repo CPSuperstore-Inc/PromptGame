@@ -15,24 +15,7 @@
         <button type="submit" class="btn btn-primary">Join Game</button>
     </form>
 
-    <hr>
-    <h3>Add a Category</h3>
-    <form action="/addCategory" method="POST">
-        <input id="category" name="category" type="text" class="form-control" placeholder="Category" required="">
-        <button type="submit" class="btn btn-primary">Add Category</button>
-    </form>
-
-    <hr>
-    <h3>Add a Question</h3>
-    <form action="/addQuestion" method="POST">
-        <select id="category" name="category" class="custom-select" required="">
-            {% for c in categories %}
-                <option value="{{ c["id"] }}">{{ c["text"] }}</option>
-            {% endfor %}
-        </select>
-        <input id="question" name="question" type="text" class="form-control" placeholder="Question" required="">
-        <button type="submit" class="btn btn-primary">Add Question</button>
-    </form>
+    <a class="btn btn-primary" href="/questionManager">Question Manager</a>
     
 
     <script type="text/javascript">

@@ -100,7 +100,7 @@ def add_question():
     question.add_question(request.form["category"], request.form["question"])
 
     flash("Added question to question bank. Thank you for your response!")
-    return redirect("/")
+    return redirect("/questionManager")
 
 
 @app.route("/addCategory", methods=["POST"])
@@ -108,4 +108,23 @@ def add_category():
     category.add_category(request.form["category"])
 
     flash("Added category to category list. Thank you for your response!")
-    return redirect("/")
+    return redirect("/questionManager")
+
+
+@app.route('/questionManager')
+def question_management():
+    return render_template("questionManager.twig", questions=question.get_all_questions(), categories=category.get_categories())
+
+
+@app.route("/editQuestion/<qid>", methods=["POST"])
+def edit_question(qid):
+    question.edit_question(qid, request.form["category"], request.form["question"])
+    flash("Successfully Updated Question")
+    return redirect("/questionManager")
+
+
+@app.route("/deleteQuestion/<qid>")
+def delete_question(qid):
+    question.delete_question(qid)
+    flash("Successfully Deleted Question")
+    return redirect("/questionManager")

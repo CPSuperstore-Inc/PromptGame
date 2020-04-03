@@ -24,5 +24,22 @@ def get_question(qid):
 
 def add_question(cid, text):
     text = text.replace('"', "'")
-    c.execute("INSERT INTO prompt (category, text) VALUES ({}, '{}')".format(cid, text))
+    c.execute("INSERT INTO prompt (category, text) VALUES ({}, \"{}\")".format(cid, text))
+    conn.commit()
+
+
+def get_all_questions():
+    d.execute("SELECT * FROM prompt")
+    return d.fetchall()
+
+
+def edit_question(qid, cat, text):
+    text = text.replace('"', "'")
+
+    c.execute("UPDATE prompt SET category={}, text=\"{}\" WHERE id={}".format(cat, text, qid))
+    conn.commit()
+
+
+def delete_question(qid):
+    c.execute("DELETE FROM prompt WHERE id={}".format(qid))
     conn.commit()
