@@ -1,0 +1,14 @@
+{% extends "base.twig" %}
+{% block title %}Home{% endblock %}
+{% block body %}
+
+    <h3>You are {% if alien %}the alien{% else %}not the alien{% endif %}</h3>
+
+    <form action="/round/{{ rid }}" method="POST">
+        {{ question["text"] }}
+        <input id="response" name="response" type="text" class="form-control" placeholder="Your Response" required="">
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+
+{% endblock %}
+{% block foot %}{% endblock %}

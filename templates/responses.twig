@@ -1,0 +1,50 @@
+{% extends "base.twig" %}
+{% block title %}Home{% endblock %}
+{% block body %}
+
+    <h3>You are {% if alien %}the alien{% else %}not the alien{% endif %}</h3>
+
+    <h4>Human Question: {{ question["text"] }}</h4>
+    <h4>Responses:</h4>
+    <p v-for="r in responses">
+        ${ r["name"] } - ${ r["response"] }
+    </p>
+    <a class="btn btn-primary" href="/round/{{ rid | int + 1 }}">Next Round</a>
+    <a class="btn btn-danger" onclick="return confirmEnd();" href="/endGame/{{ round["game"] }}">End Game</a>
+
+    <script type="text/javascript">
+        function confirmEnd(){
+            return confirm("Are you sure you want to end the game? This can not be undone!");
+        }
+    </script>
+
+    <script type="text/javascript">
+        var app = new Vue({
+            el: '#app',
+            delimiters: ["${","}"],
+            data: {
+                responses: []
+            },
+            methods: {
+                getResponses: function(){
+                    var parent = this;
+                    var xhttp = new XMLHttpRequest();
+                      xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                          parent.responses = JSON.parse(this.responseText);
+                        }
+                      };
+                      xhttp.open("GET", "/api/get-answers/{{ round["id"] }}", true);
+                      xhttp.send();
+                }
+            },
+            mounted: function () {
+              window.setInterval(() => {
+                this.getResponses();
+              }, 2000);
+              this.getResponses();
+            }
+        });
+	</script>
+{% endblock %}
+{% block foot %}{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.twig" %}
+{% block title %}Home{% endblock %}
+{% block body %}
+
+    <form action="/newGame" method="POST">
+        <input id="name" name="name" type="text" class="form-control" v-model="name" placeholder="Your Name">
+        <button type="submit" class="btn btn-success">New Game</button>
+    </form>
+
+    <form action="/joinGame" method="POST">
+        <input id="name" name="name" type="text" class="form-control" v-model="name" placeholder="Your Name">
+        <input id="code" name="code" type="text" class="form-control" v-model="code" placeholder="Game Code">
+        <button type="submit" class="btn btn-primary">Join Game</button>
+    </form>
+
+    
+
+    <script type="text/javascript">
+        Vue.component('modal', {
+            template: '#modal-template'
+        })
+    
+        var app = new Vue({
+            el: '#app',
+            delimiters: ["${","}"],
+            data: {
+                name: "",
+                code: ""
+            },
+            methods: {
+            }
+        });
+	</script>
+{% endblock %}
+{% block foot %}{% endblock %}

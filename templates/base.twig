@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %} | PromptGame2</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <link rel="stylesheet" href="/static/stylesheets/theme.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <script type="text/javascript" src="/static/js/main.js"></script>
+    {% if development %}
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    {% else %}
+        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    {% endif %}
+    <link rel="icon" href="/static/favicon.ico">
+    {% endblock %}
+    {% block additional_head %}
+    {% endblock %}
+</head>
+<body>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div style="height:45px;">&nbsp;</div>
+            <div style="width: 980px; margin-left: auto; margin-right: auto;">
+                {% for message in messages %}
+                    {% if message is string %}
+                        <div class="alert alert-info alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            {{ message }}
+                        </div>
+                    {% else %}
+                        <div class="alert alert-{{ message[1] }} alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            {{ message[0] }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    <div class="container" id="app">
+    {% block body %}
+            	
+    {% endblock %}
+    </div>
+    {% block no_content %}
+    {% endblock %}
+</body>
+</html>

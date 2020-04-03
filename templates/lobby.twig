@@ -1,0 +1,45 @@
+{% extends "base.twig" %}
+{% block title %}Home{% endblock %}
+{% block body %}
+
+    <h3>Use The Code: <code>{{ game["code"] }}</code> To Join This Game!</h3>
+
+    <p>Members</p>
+    <p v-for="m in members">${ m["name"] }</p>
+
+    <a class="btn btn-primary" href="/round/1">Enter Game</a>
+
+    <script type="text/javascript">
+        Vue.component('modal', {
+            template: '#modal-template'
+        })
+    
+        var app = new Vue({
+            el: '#app',
+            delimiters: ["${","}"],
+            data: {
+                members: []
+            },
+            methods: {
+                updateMembers: function(){
+                    var parent = this;
+                    var xhttp = new XMLHttpRequest();
+                      xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                          parent.members = JSON.parse(this.responseText);
+                        }
+                      };
+                      xhttp.open("GET", "/api/game-members/{{ game["id"] }}", true);
+                      xhttp.send();
+                }
+            },
+            mounted: function () {
+              window.setInterval(() => {
+                this.updateMembers();
+              }, 2000);
+              this.updateMembers();
+            }
+        });
+	</script>
+{% endblock %}
+{% block foot %}{% endblock %}
