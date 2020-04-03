@@ -40,7 +40,7 @@ def new_game():
 @app.route("/joinGame", methods=["POST"])
 def join_game():
     code = request.form["code"]
-    g = game.get_game(request.form["code"])
+    g = game.get_game(request.form["code"].lower().replace(" ", ""))
     if g is None:
         flash("Game Code: {} Does Not Exist!".format(code))
         return redirect("/")

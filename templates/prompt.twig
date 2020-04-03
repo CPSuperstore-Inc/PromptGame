@@ -6,7 +6,7 @@
 
     <form action="/round/{{ rid }}" method="POST">
         {{ question["text"] }}
-        <input id="response" name="response" type="text" class="form-control" placeholder="Your Response" required="">
+        <input id="response" name="response" type="text" class="form-control" placeholder="Your Response" required="" autocomplete="off">
         <button type="submit" class="btn btn-success">Submit</button>
     </form>
 
