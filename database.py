@@ -12,6 +12,7 @@ def dict_factory(cursor, row):
 
 def get_table_id(table, col_name="id"):
     c.execute("SELECT MAX({}) + 1 FROM {}".format(col_name, table))
+    lock.release()
     i = c.fetchone()[0]
     if i is None:
         return STARTING_ID

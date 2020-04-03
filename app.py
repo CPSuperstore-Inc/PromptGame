@@ -9,6 +9,7 @@ import PromptGame.player as player
 import PromptGame.round as round_mngr
 import PromptGame.question as question
 import PromptGame.response as response
+import PromptGame.category as category
 
 app = Flask(__name__)
 
@@ -26,7 +27,7 @@ def inject_dict_for_all_templates():
 
 @app.route("/")
 def index():
-    return render_template("index.twig")
+    return render_template("index.twig", categories=category.get_categories())
 
 
 @app.route("/newGame", methods=["POST"])
@@ -91,4 +92,20 @@ def responses(rid):
 @app.route("/endGame/<gid>")
 def end_game(gid):
     del session["id"]
+    return redirect("/")
+
+
+@app.route("/addQuestion", methods=["POST"])
+def add_question():
+    question.add_question(request.form["category"], request.form["question"])
+
+    flash("Added question to question bank. Thank you for your response!")
+    return redirect("/")
+
+
+@app.route("/addCategory", methods=["POST"])
+def add_category():
+    category.add_category(request.form["category"])
+
+    flash("Added category to category list. Thank you for your response!")
     return redirect("/")
