@@ -2,20 +2,47 @@
 {% block title %}Home{% endblock %}
 {% block body %}
 
-    <h3>Games</h3>
+    <header class="jumbotron my-4">
+      <h1 class="display-3">Prompt Game</h1>
+      <p class="lead">In this game, one player is an alien, and the remaining players are human. You must determine who in the group is the alien by answering questions. The alien will receive a different question than the humans. Fron the answers, the humans must determine who the alien is.</p>
+      <a href="/questionManager" class="btn btn-primary btn-lg">Question Manager</a>
+    </header>
 
-    <form action="/newGame" method="POST">
-        <input id="name" name="name" type="text" class="form-control" v-model="name" placeholder="Your Name" required="">
-        <button type="submit" class="btn btn-success">New Game</button>
-    </form>
+    <!-- Page Features -->
+    <div class="row text-center">
 
-    <form action="/joinGame" method="POST">
-        <input id="name" name="name" type="text" class="form-control" v-model="name" placeholder="Your Name" required="">
-        <input id="code" name="code" type="text" class="form-control" v-model="code" placeholder="Game Code" required="">
-        <button type="submit" class="btn btn-primary">Join Game</button>
-    </form>
+      <div class="col-lg-6 col-md-6 mb-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h4 class="card-title">New Game</h4>
+            <div class="card-text align-bottom">
+                <form action="/newGame" method="POST">
+                    <input id="name" name="name" type="text" class="form-control" v-model="name" placeholder="Your Name" required="" style="margin-bottom: 57.6px">
+                    <button type="submit" class="btn btn-primary inflate">New Game</button>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    <a class="btn btn-primary" href="/questionManager">Question Manager</a>
+      <div class="col-lg-6 col-md-6 mb-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h4 class="card-title">Join Game</h4>
+            <div class="card-text">
+                <form action="/joinGame" method="POST">
+                    <input id="name" name="name" type="text" class="form-control bottom-padding" v-model="name" placeholder="Your Name" required="">
+                    <input id="code" name="code" type="text" class="form-control bottom-padding" v-model="code" placeholder="Game Code" required="">
+                    <button type="submit" class="btn btn-primary inflate">Join Game</button>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.row -->
+
+  </div>
     
 
     <script type="text/javascript">

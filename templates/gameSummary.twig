@@ -1,30 +1,43 @@
 {% extends "base.twig" %}
 {% block title %}Game Summary{% endblock %}
 {% block body %}
-    {% for d in data %}
-        <h3>Round {{ d["round"] }}</h3>
-        <h4>Human Prompt: {{ d["real"] }}</h4>
-            <table>
-                {% for p in d["humans"] %}
-                    <tr>
-                        <td>{{ p["name"] }}</td>
-                        <td>{{ p["response"] }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
-        <h4>Alien Prompt: {{ d["fake"] }}</h4>
-        <table>
-                {% for p in d["aliens"] %}
-                    <tr>
-                        <td>{{ p["name"] }}</td>
-                        <td>{{ p["response"] }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
-    {% endfor %}
+    <header class="jumbotron my-4">
+      <h1 class="display-3">Game Summary</h1>
+      <p class="lead">Here is a list of all the questions and answers in the game. Under that, you can see the prompt the alien received and responded with.</p>
+      <a href="/" class="btn btn-primary btn-lg">Home</a>
+    </header>
 
-    <a class="btn btn-primary" href="/">Home</a>
-    
+    <table class="table table-hover">
+    {% for d in data %}
+        <thead>
+            <tr>
+                <td colspan="2"><h4>Round {{ d["round"] }}</h4></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th colspan="2">Human Prompt: {{ d["real"] }}</th>
+            </tr>
+            {% for p in d["humans"] %}
+                <tr>
+                    <td>{{ p["name"] }}</td>
+                    <td>{{ p["response"] }}</td>
+                </tr>
+            {% endfor %}
+
+            <tr>
+                <th colspan="2">Alien Prompt: {{ d["fake"] }}</th>
+            </tr>
+            {% for p in d["aliens"] %}
+                <tr>
+                    <td>{{ p["name"] }}</td>
+                    <td>{{ p["response"] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    {% endfor %}
+    </table>
+   
 
     <script type="text/javascript">
         Vue.component('modal', {
