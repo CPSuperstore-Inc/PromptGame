@@ -2,13 +2,14 @@
 {% block title %}Prompt{% endblock %}
 {% block body %}
 
-    <h3>You are {% if alien %}the alien{% else %}not the alien{% endif %}</h3>
+	<h3 class="body-padding">{{ question["text"] }}</h3>
 
     <form action="/round/{{ rid }}" method="POST">
-        {{ question["text"] }}
-        <input id="response" name="response" type="text" class="form-control" placeholder="Your Response" required="" autocomplete="off">
-        <button type="submit" class="btn btn-success">Submit</button>
+        <input id="response" name="response" type="text" class="form-control bottom-padding" placeholder="Your Response" required="" autocomplete="off">
+        <p>You are {% if alien %}the alien. Your question is different from the humans.{% else %}not the alien. Your question is different from the aliens.{% endif %}</p>
+        <button type="submit" class="btn btn-primary inflate">Answer Question</button>
     </form>
+
 
 {% endblock %}
 {% block foot %}{% endblock %}
