@@ -26,3 +26,17 @@ def get_game(game_id):
 def remove_code(game_id):
     d.execute("UPDATE game SET code=NULL WHERE id={}".format(game_id))
     conn.commit()
+
+
+def get_summary_data(game_id):
+    d.execute('select round.id, game, round, prompt.category, prompt.text as "real", p.text as "fake", c.text from round join prompt on prompt.id=round.regularQuestion join prompt p on round.falseQuestion=p.id join category c on prompt.category=c.id where game={}'.format(game_id))
+    rs = d.fetchall()
+    for r in rs:
+        d.execute("select player.id, player.name, player.alien, response.response as 'response' from response join player on player.id=response.player where round={} and player.alien=0".format(r["id"]))
+        r["humans"] = d.fetchall()
+
+        d.execute("select player.id, player.name, player.alien, response.response as 'response' from response join player on player.id=response.player where round={} and player.alien=1".format(r["id"]))
+        r["aliens"] = d.fetchall()
+
+    return rs
+

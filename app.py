@@ -92,7 +92,12 @@ def responses(rid):
 @app.route("/endGame/<gid>")
 def end_game(gid):
     del session["id"]
-    return redirect("/")
+    return redirect("/gameSummary/{}".format(gid))
+
+
+@app.route("/gameSummary/<gid>")
+def game_summary(gid):
+    return render_template("gameSummary.twig", data=game.get_summary_data(gid))
 
 
 @app.route("/addQuestion", methods=["POST"])

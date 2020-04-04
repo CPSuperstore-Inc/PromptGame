@@ -1,0 +1,44 @@
+{% extends "base.twig" %}
+{% block title %}Home{% endblock %}
+{% block body %}
+    {% for d in data %}
+        <h3>Round {{ d["round"] }}</h3>
+        <h4>Human Prompt: {{ d["real"] }}</h4>
+            <table>
+                {% for p in d["humans"] %}
+                    <tr>
+                        <td>{{ p["name"] }}</td>
+                        <td>{{ p["response"] }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        <h4>Alien Prompt: {{ d["fake"] }}</h4>
+        <table>
+                {% for p in d["aliens"] %}
+                    <tr>
+                        <td>{{ p["name"] }}</td>
+                        <td>{{ p["response"] }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+    {% endfor %}
+
+    <a class="btn btn-primary" href="/">Home</a>
+    
+
+    <script type="text/javascript">
+        Vue.component('modal', {
+            template: '#modal-template'
+        })
+    
+        var app = new Vue({
+            el: '#app',
+            delimiters: ["${","}"],
+            data: {
+            },
+            methods: {
+            }
+        });
+	</script>
+{% endblock %}
+{% block foot %}{% endblock %}

@@ -4,7 +4,9 @@ import random
 
 
 def join_game(player_name:str, game_id):
-    c.execute("INSERT INTO player (game, name) VALUES ('{}', '{}')".format(game_id, player_name))
+    player_name = player_name.replace('"', "'")
+
+    c.execute("INSERT INTO player (game, name) VALUES ('{}', \"{}\")".format(game_id, player_name))
     conn.commit()
     return c.lastrowid
 
