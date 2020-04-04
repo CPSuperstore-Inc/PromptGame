@@ -85,8 +85,9 @@ def responses(rid):
     round_data = round_mngr.get_round(rid, g["id"])
     alien = player.is_alien(session["id"])
     q = question.get_question(round_data["regularQuestion"])
+    players = game.get_members(g["id"])
 
-    return render_template("responses.twig", round=round_data, alien=alien, question=q, rid=rid)
+    return render_template("responses.twig", round=round_data, alien=alien, question=q, rid=rid, player_count=len(players))
 
 
 @app.route("/endGame/<gid>")

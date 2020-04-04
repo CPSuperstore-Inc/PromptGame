@@ -9,7 +9,7 @@
     <p v-for="r in responses">
         ${ r["name"] } - ${ r["response"] }
     </p>
-    <a class="btn btn-primary" href="/round/{{ rid | int + 1 }}">Next Round</a>
+    <button class="btn btn-primary" onclick="window.location.href='/round/{{ rid | int + 1 }}'" :disabled="responses.length < playerCount">Next Round</button>
     <a class="btn btn-danger" onclick="return confirmEnd();" href="/endGame/{{ round["game"] }}">End Game</a>
 
     <script type="text/javascript">
@@ -23,7 +23,8 @@
             el: '#app',
             delimiters: ["${","}"],
             data: {
-                responses: []
+                responses: [],
+                playerCount: {{ player_count }}
             },
             methods: {
                 getResponses: function(){

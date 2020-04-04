@@ -39,4 +39,3 @@ def get_summary_data(game_id):
         r["aliens"] = d.fetchall()
 
     return rs
-
