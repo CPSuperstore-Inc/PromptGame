@@ -10,44 +10,44 @@
 			<div class="container">
 			<div class="row">
 			    <div class="col-sm-4">
-			    	<select id="category" name="category" class="custom-select" required="">
+			    	<select id="category" name="category" class="custom-select bottom-padding" required="">
 			            {% for c in categories %}
 			                <option value="{{ c["id"] }}" {% if q["category"] == c["id"] %}selected=""{% endif %}>{{ c["text"] }}</option>
 			            {% endfor %}
 			        </select>
 			    </div>
 			    <div class="col-sm-6">
-			    	<input id="question" name="question" type="text" class="form-control" placeholder="Question" required="" value="{{ q['text'] }}">
+			    	<input id="question" name="question" type="text" class="form-control bottom-padding" placeholder="Question" required="" value="{{ q['text'] }}">
 			    </div>
 			    <div class="col-sm-2">			
-			    	<button class="btn btn-link" type="submit"><i class="fa fa-edit"></i></button>
-					<button class="btn btn-link" type="button"><i class="fa fa-trash" onclick="deleteQuestion({{ q['id'] }})"></i></button>
+			    	<button class="btn btn-link bottom-padding" type="submit"><i class="fa fa-edit"></i></button>
+					<button class="btn btn-link bottom-padding" type="button"><i class="fa fa-trash" onclick="deleteQuestion({{ q['id'] }})"></i></button>
 				</div>
 			</div>
 			</div>
 		</form>
 	{% endfor %}
 
-	    <a class="btn btn-primary" href="/">Home</a>
+	    <a class="btn btn-primary btn-block" href="/">Home</a>
 
 
 	 <hr>
     <h3>Add a Category</h3>
     <form action="/addCategory" method="POST">
-        <input id="category" name="category" type="text" class="form-control" placeholder="Category" required="">
-        <button type="submit" class="btn btn-primary">Add Category</button>
+        <input id="category" name="category" type="text" class="form-control bottom-padding" placeholder="Category" required="">
+        <button type="submit" class="btn btn-primary btn-block">Add Category</button>
     </form>
 
     <hr>
     <h3>Add a Question</h3>
     <form action="/addQuestion" method="POST">
-        <select id="category" name="category" class="custom-select" required="">
+        <select id="category" name="category" class="custom-select bottom-padding" required="">
             {% for c in categories %}
                 <option value="{{ c["id"] }}">{{ c["text"] }}</option>
             {% endfor %}
         </select>
-        <input id="question" name="question" type="text" class="form-control" placeholder="Question" required="">
-        <button type="submit" class="btn btn-primary">Add Question</button>
+        <input id="question" name="question" type="text" class="form-control bottom-padding" placeholder="Question" required="">
+        <button type="submit" class="btn btn-primary btn-block bottom-padding">Add Question</button>
     </form>
 
 	<script type="text/javascript">
