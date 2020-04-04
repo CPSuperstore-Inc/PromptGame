@@ -2,8 +2,7 @@
 {% block title %}Question Manager{% endblock %}
 {% block body %}
 
-    <h3>Questions</h3>
-
+    <h3 class="body-padding">Questions</h3>
    
 	{% for q in questions %}
 		<form action="/editQuestion/{{ q['id'] }}" method="POST">
