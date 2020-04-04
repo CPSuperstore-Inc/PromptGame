@@ -1,5 +1,5 @@
 {% extends "base.twig" %}
-{% block title %}Home{% endblock %}
+{% block title %}Round Responses{% endblock %}
 {% block body %}
 
     <h3>You are {% if alien %}the alien{% else %}not the alien{% endif %}</h3>
@@ -7,7 +7,7 @@
     <h4>Human Question: {{ question["text"] }}</h4>
     <h4>Responses:</h4>
     <p v-for="r in responses">
-        ${ r["name"] } - ${ r["response"] }
+        <button class="btn btn-danger" @click="accusePlayer(r)">Accuse</button>${ r["name"] } - ${ r["response"] }
     </p>
     <button class="btn btn-primary" onclick="window.location.href='/round/{{ rid | int + 1 }}'" :disabled="responses.length < playerCount">Next Round</button>
     <a class="btn btn-danger" onclick="return confirmEnd();" href="/endGame/{{ round["game"] }}">End Game</a>
@@ -37,6 +37,16 @@
                       };
                       xhttp.open("GET", "/api/get-answers/{{ round["id"] }}", true);
                       xhttp.send();
+                },
+                accusePlayer:function(p){
+                    if(confirm("Are you sure you want to accuse " + p["name"] + "?\nThis will automatically end the game!")){
+                        if(p["alien"] == 1){
+                            alert("You were correct! Congratulations!");
+                        } else {
+                            alert("You were incorrect! Congratulations!");
+                        }
+                        window.location.href="/endGame/{{ round["game"] }}";
+                    }
                 }
             },
             mounted: function () {

@@ -58,7 +58,12 @@ def lobby():
 def round_play(rid):
     if request.method == "GET":
         g = player.get_game_info(session["id"])
-        game.remove_code(g["id"])
+        try:
+            game.remove_code(g["id"])
+        except TypeError:
+            flash("The game has ended! Have a nice day :)")
+            return redirect("/gameSummary/{}".format(player.get_player_info(session["id"])["game"]))
+
         player.select_alien(g["id"])
         round_data = round_mngr.get_round(rid, g["id"])
         alien = player.is_alien(session["id"])
@@ -93,6 +98,7 @@ def responses(rid):
 @app.route("/endGame/<gid>")
 def end_game(gid):
     del session["id"]
+    game.delete_game(gid)
     return redirect("/gameSummary/{}".format(gid))
 
 

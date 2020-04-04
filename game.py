@@ -39,3 +39,8 @@ def get_summary_data(game_id):
         r["aliens"] = d.fetchall()
 
     return rs
+
+
+def delete_game(game_id):
+    c.execute("DELETE FROM game WHERE id={}".format(game_id))
+    conn.commit()

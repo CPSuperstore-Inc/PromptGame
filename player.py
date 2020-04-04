@@ -16,6 +16,11 @@ def get_game_info(player_id):
     return d.fetchone()
 
 
+def get_player_info(player_id):
+    d.execute("SELECT * FROM player WHERE id={}".format(player_id))
+    return d.fetchone()
+
+
 def is_alien(pid):
     d.execute("SELECT alien FROM player WHERE id={}".format(pid))
     return d.fetchone()["alien"] == 1
