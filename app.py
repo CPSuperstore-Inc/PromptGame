@@ -12,6 +12,7 @@ import PromptGame.response as response
 import PromptGame.category as category
 import PromptGame.utils as utils
 
+
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = SECRET_KEY
@@ -28,7 +29,10 @@ def inject_dict_for_all_templates():
 
 @app.route("/")
 def index():
-    return render_template("index.twig", categories=category.get_categories())
+    default_name = ""
+    if "name" in request.args:
+        default_name = request.args["name"]
+    return render_template("index.twig", categories=category.get_categories(), default_name=default_name)
 
 
 @app.route("/newGame", methods=["POST"])
@@ -119,14 +123,15 @@ def responses(rid):
 
 @app.route("/endGame/<gid>")
 def end_game(gid):
-    del session["id"]
     game.delete_game(gid)
     return redirect("/gameSummary/{}".format(gid))
 
 
 @app.route("/gameSummary/<gid>")
 def game_summary(gid):
-    return render_template("gameSummary.twig", data=game.get_summary_data(gid))
+    old_name = player.get_player_info(session["id"])["name"]
+    del session["id"]
+    return render_template("gameSummary.twig", data=game.get_summary_data(gid), old_name=old_name)
 
 
 @app.route("/addQuestion", methods=["POST"])
