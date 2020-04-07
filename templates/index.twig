@@ -32,8 +32,8 @@
             <div class="card-text">
                 <form action="/joinGame" method="POST">
                     <input id="name" name="name" type="text" class="form-control bottom-padding" v-model="name" placeholder="Your Name" required="">
-                    <input id="code" name="code" type="text" class="form-control bottom-padding" v-model="code" placeholder="Game Code" required="">
-                    <button type="submit" class="btn btn-primary inflate">Join Game</button>
+                    <input id="code" name="code" type="text" class="form-control bottom-padding" v-model="code" placeholder="Game Code" required="" maxlength="5">
+                    <button type="submit" class="btn btn-primary inflate" :disabled="code.length < 5" autocomplete="off">Join Game</button>
                 </form>
             </div>
           </div>
