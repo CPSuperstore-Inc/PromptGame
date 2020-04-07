@@ -55,6 +55,12 @@ def lobby():
     return render_template("lobby.twig", game=player.get_game_info(session["id"]))
 
 
+@app.route("/gameEnded/<gid>")
+def game_ended(gid):
+    flash("The game has ended! Have a nice day :)")
+    return redirect("/gameSummary/{}".format(gid))
+
+
 @app.route("/round/<rid>", methods=["GET", "POST"])
 def round_play(rid):
     if request.method == "GET":
@@ -74,17 +80,18 @@ def round_play(rid):
         else:
             q = question.get_question(round_data["regularQuestion"])
 
-        return render_template("prompt.twig", round=round_data, alien=alien, question=q, rid=rid)
+        return render_template("prompt.twig", round=round_data, alien=alien, question=q, rid=rid, game_id=g["id"])
 
     if request.method == "POST":
         g = player.get_game_info(session["id"])
+
+        r = request.form["response"]
+
+        if not utils.is_answer_legal(r):
+            flash("The answer you have entered is an illegal answer. Please try again.")
+            return redirect("/round/{}".format(rid))
+
         try:
-            r = request.form["response"]
-
-            if not utils.is_answer_legal(r):
-                flash("The answer you have entered is an illegal answer. Please try again.")
-                return redirect("/round/{}".format(rid))
-
             response.set_response(
                 round_mngr.get_round(rid, g["id"])["id"], session["id"], r
             )

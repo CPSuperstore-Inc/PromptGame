@@ -44,3 +44,8 @@ def get_summary_data(game_id):
 def delete_game(game_id):
     c.execute("DELETE FROM game WHERE id={}".format(game_id))
     conn.commit()
+
+
+def is_game_running(game_id):
+    c.execute("SELECT COUNT(*) FROM game WHERE id={}".format(game_id))
+    return bool(c.fetchone()[0] > 0)
