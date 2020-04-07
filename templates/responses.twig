@@ -7,7 +7,7 @@
 
     <table class="table table-hover">
         <tr v-for="r in responses">
-            {% if not alien %}<td><button class="btn btn-danger" @click="accusePlayer(r)">Accuse</button></td>{% endif %}
+            {% if not alien %}<td><button v-if="uuid != r['player']" class="btn btn-danger" @click="accusePlayer(r)">Accuse</button></td>{% endif %}
             <td>${ r["name"] }</td>
             <td>${ r["response"] }</td>
         </tr>
@@ -28,7 +28,8 @@
             delimiters: ["${","}"],
             data: {
                 responses: [],
-                playerCount: {{ player_count }}
+                playerCount: {{ player_count }},
+                uuid: {{ session["id"] }}
             },
             methods: {
                 getResponses: function(){
