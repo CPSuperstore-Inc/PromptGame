@@ -23,6 +23,10 @@
     </script>
 
     <script type="text/javascript">
+        startGameRunningCheckThread({{ round["game"] }});
+    </script>
+
+    <script type="text/javascript">
         var app = new Vue({
             el: '#app',
             delimiters: ["${","}"],
@@ -62,8 +66,5 @@
             }
         });
 	</script>
-    <script type="text/javascript">
-        startGameRunningCheckThread({{ game_id }});
-    </script>
 {% endblock %}
 {% block foot %}{% endblock %}

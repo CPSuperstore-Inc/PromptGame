@@ -104,7 +104,11 @@ def round_play(rid):
 @app.route("/response/<rid>")
 def responses(rid):
     g = player.get_game_info(session["id"])
-    player.select_alien(g["id"])
+    try:
+        player.select_alien(g["id"])
+    except TypeError:
+        flash("The game has ended! Have a nice day :)")
+        return redirect("/gameSummary/{}".format(player.get_player_info(session["id"])["game"]))
     round_data = round_mngr.get_round(rid, g["id"])
     alien = player.is_alien(session["id"])
     q = question.get_question(round_data["regularQuestion"])
