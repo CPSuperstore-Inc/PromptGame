@@ -10,6 +10,7 @@ import PromptGame.round as round_mngr
 import PromptGame.question as question
 import PromptGame.response as response
 import PromptGame.category as category
+import PromptGame.utils as utils
 
 app = Flask(__name__)
 
@@ -77,10 +78,20 @@ def round_play(rid):
 
     if request.method == "POST":
         g = player.get_game_info(session["id"])
-        response.set_response(
-            round_mngr.get_round(rid, g["id"])["id"], session["id"], request.form["response"]
-        )
-        return redirect("/response/{}".format(rid))
+        try:
+            r = request.form["response"]
+
+            if not utils.is_answer_legal(r):
+                flash("The answer you have entered is an illegal answer. Please try again.")
+                return redirect("/round/{}".format(rid))
+
+            response.set_response(
+                round_mngr.get_round(rid, g["id"])["id"], session["id"], r
+            )
+            return redirect("/response/{}".format(rid))
+        except TypeError:
+            flash("The game has ended! Have a nice day :)")
+            return redirect("/gameSummary/{}".format(player.get_player_info(session["id"])["game"]))
 
 
 @app.route("/response/<rid>")
