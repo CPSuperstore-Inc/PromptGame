@@ -13,6 +13,18 @@
       <li class="list-group-item" v-for="m in members">${ m["name"] }</li>
     </ul> 
 
+    <a class="btn btn-danger btn-block" onclick="return confirmEnd();" href="/endGame/{{ game["id"] }}">End Game</a>
+
+    <script type="text/javascript">
+        function confirmEnd(){
+            return confirm("Are you sure you want to end the game? This can not be undone!");
+        }
+    </script>
+
+    <script type="text/javascript">
+      startGameRunningCheckThread({{ game["id"] }});
+    </script>
+
     <script type="text/javascript">
         Vue.component('modal', {
             template: '#modal-template'
